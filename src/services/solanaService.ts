@@ -1,29 +1,47 @@
-import { Keypair, Connection, SystemProgram, Transaction, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { Connection, Keypair, Transaction, TransactionInstruction, sendAndConfirmTransaction } from '@solana/web3.js';
+import { CONFIG } from '../config';
 
-const SOLANA_CLUSTER_URL = "https://api.mainnet-beta.solana.com"; 
+// Create a Solana connection object once and reuse it
+const connection = new Connection(CONFIG.SOLANA_RPC_URL, 'single');
 
-const connection = new Connection(SOLANA_CLUSTER_URL, 'confirmed');
+/**
+ * Get the balance of a Solana account.
+ * @param publicKey The public key of the account.
+ * @returns The balance of the account.
+ */
+export async function getBalance(publicKey: string): Promise<number> {
+  try {
+    const balance = await connection.getBalance(new PublicKey(publicKey));
+    return balance;
+  } catch (error) {
+    throw new Error(`Failed to get balance for account ${publicKey}: ${error.message}`);
+  }
+}
 
-const solanaService = {
-    async getBalance(publicKey: string): Promise<number> {
-        const balance = await connection.getBalance(new PublicKey(publicKey));
-        return balance / LAMPORTS_PER_SOL;
-    },
-    
-    async sendTransaction(keypair: Keypair, recipientAddress: string, amount: number): Promise<string> {
-        const transaction = new Transaction().add(
-            SystemProgram.transfer({
-                fromPubkey: keypair.publicKey,
-                toPubkey: new PublicKey(recipientAddress),
-                lamports: amount
-            })
-        );
-        transaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
-        transaction.sign(keypair);
+/**
+ * Send a Solana transaction.
+ * @param sender The sender's Solana keypair.
+ * @param recipientAddress The recipient's Solana address.
+ * @param amount The amount to send.
+ * @returns The transaction signature.
+ */
+export async function sendTransaction(
+  sender: Keypair,
+  recipientAddress: string,
+  amount: number
+): Promise<string> {
+  try {
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: sender.publicKey,
+        toPubkey: new PublicKey(recipientAddress),
+        lamports: amount,
+      })
+    );
 
-        const signature = await connection.sendTransaction(transaction);
-        return signature;
-    }
-};
-
-export default solanaService;
+    const signature = await sendAndConfirmTransaction(connection, transaction, [sender]);
+    return signature;
+  } catch (error) {
+    throw new Error(`Failed to send transaction: ${error.message}`);
+  }
+}
