@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Visual Studio Code
+.vscode/
+
+# IDE-specific files
+.idea/
+*.suo
+*.ntvs*
+
+# Compiled JavaScript
+/dist/
+
+# Dependency directories
+/jspm_packages/
+/bower_components/
+
+# Types
+/types/
