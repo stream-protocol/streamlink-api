@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    // Language and Environment
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    
+    // Paths and Directories
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@models/*": ["models/*"]
+    },
+    "rootDir": "src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types",
+
+    // Type Checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Emit Options
+    "declaration": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+
+    // Misc
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  
+  "include": ["src"],
+  "exclude": ["node_modules", "**/__tests__/*", "dist"]
+}

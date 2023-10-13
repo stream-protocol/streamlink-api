@@ -1,0 +1,48 @@
+{
+    "name": "@streamlink/api",
+    "version": "0.1.0",
+    "description": "API for creating and sending StreamLinks",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "test": "jest",
+        "build": "tsc",
+        "lint": "eslint . --ext .ts",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm test && npm run lint"
+    },
+    "author": "Stream Protocol",
+    "license": "MIT",
+    "dependencies": {
+        "@solana/web3.js": "^1.87.1",
+        "bs58": "^5.0.0",
+        "libsodium": "^0.7.13",
+        "libsodium-wrappers-sumo": "^0.7.13"
+    },
+    "devDependencies": {
+        "@types/jest": "^28.1.8",
+        "@types/libsodium-wrappers-sumo": "^0.7.6",
+        "@types/sodium-native": "^2.3.6",
+        "@typescript-eslint/eslint-plugin": "^6.7.5",
+        "@typescript-eslint/parser": "^6.7.5",
+        "eslint": "^8.51.0",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.1.1",
+        "typescript": "^5.2.2"
+    },
+    "files": [
+        "dist/**/*"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stream-protocol/streamlink-api.git"
+    },
+    "keywords": [
+        "crypto",
+        "solana",
+        "streamlink",
+        "wallet",
+        "airdrop"
+    ],
+    "homepage": "https://docs.streamlink.xyz"
+}
